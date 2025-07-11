@@ -4,23 +4,25 @@ import type { NextRequest } from "next/server";
 
 
 
-
-const middleware =async (req:NextRequest) => {
+const middleware = async (req: NextRequest) => {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  // List of protected routes
-  const protectedRoutes = ["/my-college", "/profile", "/admission"];
-
-  const isProtected = protectedRoutes.some((path) => req.nextUrl.pathname.startsWith(path))
-  
-  if (isProtected && !token) {
+  if (!token) {
     const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname); // ✅ redirect after login
     return NextResponse.redirect(loginUrl);
   }
+
   return NextResponse.next();
 };
 
-export const config = {
-  matcher:["/my-college", "/profile", "/admission"]
-}
 export default middleware;
+
+export const config = {
+   matcher: [
+    "/my-college/:path*",
+    "/colleges/:path*",
+    "/profile/:path*",
+    "/admission/:path*"
+  ],
+}

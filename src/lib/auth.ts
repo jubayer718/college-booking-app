@@ -13,6 +13,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login", // custom login page
   },
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      if (url.startsWith(baseUrl)) return url;
+      return baseUrl;
+    },
     async session({ session, token }) {
       session.user.id = token.sub || "";
       return session;

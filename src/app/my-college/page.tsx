@@ -5,11 +5,14 @@
 import { useEffect, useState } from "react";
 import { Admission } from "@/interfaces/admission.interface";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 
 const MyCollege = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter()
   const [data, setData] = useState<Admission[] | null>(null);
-  console.log(data)
+  
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -20,7 +23,11 @@ const MyCollege = () => {
     }
   }, [session?.user?.email]);
 
-  if (!session) return <p className="text-center">Please login to view your college</p>;
+  if(status === 'loading')return <p className="my-14 text-center">Loading...</p>
+  if (!session) {
+    router.replace('/login');
+    return null
+  } 
 
   return (
     <div className="p-8 my-14">

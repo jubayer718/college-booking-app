@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button";
+import { auth } from "@/lib/auth";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+
+
 
 interface College {
   _id: string;
@@ -28,8 +31,11 @@ const getCollegeById = async (_id: string): Promise<College | null> => {
 };
 
 const CollegeDetailsPage = async ({ params }: { params: { id: string } }) => {
+  const session = await auth();
+  if (!session) {
+    return redirect("/login"); 
+  }
   const college = await getCollegeById(params.id);
-
   if (!college) return notFound();
 
   return (
