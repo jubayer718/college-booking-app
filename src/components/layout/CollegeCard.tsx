@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface Props {
   college: {
@@ -45,7 +46,7 @@ const CollegeCard = ({ college }: Props) => {
         <p>🎉 <span className="font-medium">Events:</span> {college.events.join(", ")}</p>
         <p>🔬 <span className="font-medium">Research:</span> {college.research.join(", ")}</p>
         <p>⚽ <span className="font-medium">Sports:</span> {college.sports.join(", ")}</p>
-        <Button className="w-full mt-3">View Details</Button>
+        <Link  href={`/colleges/${college._id}`}><Button className="w-full mt-3">View Details</Button></Link>
       </CardContent>
     </Card>
   );
