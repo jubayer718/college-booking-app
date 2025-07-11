@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface College {
@@ -56,6 +58,9 @@ const CollegeDetailsPage = async ({ params }: { params: { id: string } }) => {
           {college.sports.map((item, i) => <li key={i}>{item}</li>)}
         </ul>
       </div>
+      <Link href={`/admission/${params.id}`}>
+        <Button>Go to Admission</Button>
+    </Link>
     </div>
   );
 };
