@@ -1,39 +1,53 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
-
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
+interface Props {
+  college: {
+    _id: string;
+    name: string;
+    image: string;
+    admissionDates: string;
+    events: string[];
+    research: string[];
+    sports: string[];
+    rating: number;
+  };
+}
 
-
-const CollegeCard = () => {
+const CollegeCard = ({ college }: Props) => {
   return (
-    <Card className="hover:shadow-lg transition-all">
-    <CardHeader>
-      {/* <img
-        src="https://via.placeholder.com/300"
-        alt="College"
-        className="rounded-lg w-full h-40 object-cover"
-      /> */}
-      <CardTitle>Example College</CardTitle>
-      <CardDescription>Admission: 01 June - 30 July</CardDescription>
-    </CardHeader>
-    <CardContent>
-      <ul className="text-sm space-y-1">
-        <li>🎉 Events: Cultural Fest, Seminar</li>
-        <li>🔬 Research: AI, ML, Quantum</li>
-        <li>⚽ Sports: Football, Cricket</li>
-      </ul>
-      <Button className="mt-4 w-full" variant="default">
-        View Details
-      </Button>
-    </CardContent>
-  </Card>
+    <Card className={cn('overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 py-4')}>
+      <CardHeader className={cn("px-2 ")}>
+        <div className="relative w-full h-full">
+          <img
+            src={college.image}
+            alt="College image"
+            className="w-full h-full object-cover p-4 "
+          />
+        </div>
+        <div className="p-4">
+          <CardTitle className="text-xl font-semibold">{college.name}</CardTitle>
+          <CardDescription className="text-sm text-muted-foreground mt-1">
+            Admission: {college.admissionDates}
+          </CardDescription>
+        </div>
+      </CardHeader>
 
+      <CardContent className="space-y-2 text-sm px-4 pb-4">
+        <p>🎉 <span className="font-medium">Events:</span> {college.events.join(", ")}</p>
+        <p>🔬 <span className="font-medium">Research:</span> {college.research.join(", ")}</p>
+        <p>⚽ <span className="font-medium">Sports:</span> {college.sports.join(", ")}</p>
+        <Button className="w-full mt-3">View Details</Button>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -1,12 +1,16 @@
 import Navbar from "@/components/layout/Navbar";
+import SearchFilter from "@/components/layout/SearchFilter";
 
 
 export default function Home() {
-
-  
+ 
   return (
     <div>
-    <Navbar/>
-   </div>
+      <Navbar />
+      <SearchFilter/>
+
+     
+
+    </div>
   );
 }

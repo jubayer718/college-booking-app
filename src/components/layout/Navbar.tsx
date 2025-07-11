@@ -4,7 +4,7 @@ import { useSession,signOut } from "next-auth/react";
 const Navbar = () => {
   const { data: session } = useSession();
   return (
-    <div className="p-4 bg-white shadow flex justify-between items-center">
+    <div className="fixed top-0 z-50 w-full p-4 bg-white shadow flex justify-between items-center">
       <span className="font-bold">College Booking</span>
       {
         session ? (
