@@ -3,20 +3,25 @@
 
 import { useEffect, useState } from "react";
 import { Review } from "@/interfaces/review.interface";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 
 export default function ReviewList({ collegeId }: { collegeId: string }) {
-
   const [reviews, setReviews] = useState<Review[]>([]);
-  
+  const axiosPublic = useAxiosPublic();
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetch(`http://localhost:9000/api/reviews?collegeId=${collegeId}`)
-      .then((res) => res.json())
-      .then(data => setReviews(data.data));
-    }, 1000);
-    return ()=>clearTimeout(timer)
-  }, [collegeId]);
+    const fetchReviews = async () => {
+      try {
+        const response = await axiosPublic.get(`/api/reviews?collegeId=${collegeId}`);
+        console.log(response)
+        setReviews(response.data.data);
+      } catch (error) {
+        console.error("Failed to fetch reviews:", error);
+      }
+    };
+    fetchReviews();
+  }, [axiosPublic, collegeId]);
 
   return (
     <div className="space-y-4 mt-8">
