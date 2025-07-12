@@ -1,18 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Admission } from "@/interfaces/admission.interface";
+import { useSession } from "next-auth/react";
 
 
 
 const AdmissionForm = () => {
   const { id } = useParams();
-
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const [formData, setFormData] = useState<Admission>({
     name: "",
     subject: "",
@@ -23,6 +26,14 @@ const AdmissionForm = () => {
     image: "",
     collegeId: "",
   });
+
+  
+   if(status === 'loading')return <p className="my-14 text-center">Loading...</p>
+  if (!session) {
+    router.replace('/login');
+    return null
+  } 
+
 
 
   const handleChange = (e: any) => {

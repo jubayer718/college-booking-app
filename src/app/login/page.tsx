@@ -1,16 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+
 
 export default function LoginPage() {
-    const router = useRouter();
-  const currentPath = window.location.pathname;
+
+  const currentPath = usePathname();
+
   const handleLogin = () => {
     signIn("google", {
-      callbackUrl: currentPath,
+      callbackUrl: currentPath || "/",
     })
   }
   return (

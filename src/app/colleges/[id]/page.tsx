@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+import ReviewForm from "@/components/layout/ReviewForm";
+import ReviewList from "@/components/layout/ReviewList";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
@@ -25,7 +27,7 @@ const getCollegeById = async (_id: string): Promise<College | null> => {
     if (!res.ok) return null;
     return res.json();
   } catch (err) {
-    console.log("error from details page",err)
+    console.log("error from details page", err)
     return null;
   }
 };
@@ -33,7 +35,7 @@ const getCollegeById = async (_id: string): Promise<College | null> => {
 const CollegeDetailsPage = async ({ params }: { params: { id: string } }) => {
   const session = await auth();
   if (!session) {
-    return redirect("/login"); 
+    return redirect("/login");
   }
   const college = await getCollegeById(params.id);
   if (!college) return notFound();
@@ -66,7 +68,10 @@ const CollegeDetailsPage = async ({ params }: { params: { id: string } }) => {
       </div>
       <Link href={`/admission/${params.id}`}>
         <Button>Go to Admission</Button>
-    </Link>
+      </Link>
+
+      <ReviewForm collegeId={params.id} />
+      <ReviewList collegeId={params.id} />
     </div>
   );
 };

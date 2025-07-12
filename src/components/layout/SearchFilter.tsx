@@ -20,16 +20,15 @@ const SearchFilter = () => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/colleges')
+    fetch('https://college-booking-server-neon.vercel.app/api/colleges')
       .then(res => res.json())
-      .then(data => setColleges(data))
+      .then(data => setColleges(data.data))
       .catch(error => {
       console.log('data fetching error',error);
     })
   }, [])
 
 
-  
   const filteredColleges = colleges.filter(college =>
     college.name.toLowerCase().includes(searchText.toLowerCase())
   );
