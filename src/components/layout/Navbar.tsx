@@ -12,6 +12,7 @@ const Navbar = () => {
         <ul className="flex gap-4 sm:gap-2 font-semibold">
           <Link href={'/'}>Home</Link>
           <Link href={'/colleges'}>Colleges</Link>
+          <Link href={'/admission/:id'}>Admission</Link>
           <Link href={`/my-college`}>My College</Link>
         </ul>
           {
