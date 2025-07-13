@@ -8,7 +8,7 @@ import ReviewSection from "@/components/layout/home/ReviewSection";
 export default function Home() {
  
   return (
-    <div className="min-h-dvh">
+    <div className="min-h-screen">
       <SearchFilter />
 
       {/* college gallery */}

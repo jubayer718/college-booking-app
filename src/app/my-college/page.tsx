@@ -34,7 +34,7 @@ const MyCollege = () => {
   if (!session) return null;
 
   return (
-    <div className="p-8 my-14">
+    <div className="p-8 my-14 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">🎓 My College Admission Info</h2>
       {data?.length ? (
         data.map((item) => (
