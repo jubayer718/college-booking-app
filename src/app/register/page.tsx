@@ -38,10 +38,17 @@ const RegisterPage = () => {
       password : securePass,
       role: 'user'
      }
-     console.log(userInfo)
+    
      try {
        const { data } = await axiosPublic.post("/api/users", userInfo);
        console.log(data)
+       if (data.success === true) {
+         alert(data.message)
+       }
+
+       if (data.success === false) {
+         alert(data.message)
+       }
      } catch (error) {
       console.log('create user error',error)
      }

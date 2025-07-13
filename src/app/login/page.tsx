@@ -7,10 +7,12 @@ import { usePathname } from "next/navigation";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {FaGoogle} from "react-icons/fa6"
+import { useState } from "react";
 
 
 export default function LoginPage() {
-
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const currentPath = usePathname();
 
   const handleLogin = () => {
@@ -18,20 +20,28 @@ export default function LoginPage() {
       callbackUrl: currentPath || "/",
     })
   }
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.currentTarget;
-    const fromData = new FormData(form);
+    const res = await signIn('credentials', {
+      email,
+      password,
+      redirect: true,
+      callbackUrl: '/',
+    }) 
 
-    const name = fromData.get("name") as string;
-    const email = fromData.get("email") as string;
 
-    const userInfo = {
-      name: name,
-      email: email,
-      role: 'user'
-    }
+    // const form = e.currentTarget;
+    // const fromData = new FormData(form);
+
+    // const name = fromData.get("name") as string;
+    // const email = fromData.get("email") as string;
+
+    // const userInfo = {
+    //   name: name,
+    //   email: email,
+    //   role: 'user'
+    // }
 
 
   }
@@ -42,9 +52,12 @@ export default function LoginPage() {
         <p className="text-gray-600 mb-6">Use your Google account to continue</p>
         <form className="my-6 space-y-4" onSubmit={handleSubmit}>
           
-          <Input className="placeholder:text-sm font-semibold" type="text" name="name" id="name" placeholder="Name" required />
           
-          <Input className="placeholder:text-sm font-semibold" type="email" name="email" id="email" placeholder="Email" required />
+          
+          <Input className="placeholder:text-sm font-semibold" type="email" name="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required />
+          <Input className="placeholder:text-sm font-semibold" type="password" name="email" id="password" placeholder="Password"  onChange={(e) => setPassword(e.target.value)} required />
+
+          
           <Button type="submit">Submit</Button>
         </form>
         <Button

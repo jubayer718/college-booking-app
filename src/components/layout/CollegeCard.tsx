@@ -46,7 +46,7 @@ const CollegeCard = ({ college }: Props) => {
         <p>🎉 <span className="font-medium">Events:</span> {college.events.join(", ")}</p>
         <p>🔬 <span className="font-medium">Research:</span> {college.research.join(", ")}</p>
         <p>⚽ <span className="font-medium">Sports:</span> {college.sports.join(", ")}</p>
-        <Link  href={`/colleges/${college._id}`}><Button className="w-full mt-3">View Details</Button></Link>
+        <Link  href={`/college-details/${college._id}`}><Button className="w-full mt-3">View Details</Button></Link>
       </CardContent>
     </Card>
   );

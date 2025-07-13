@@ -35,12 +35,10 @@ const DetailsPage = () => {
       router.replace("/login");
     }
   }, [status, router]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (status === 'authenticated') {
-        router.push("/login");
-        return null
-      }
+     
       const getCollege = async () => {
         try {
           const { data } = await axiosPublic.get(`/api/college/${id}`);
