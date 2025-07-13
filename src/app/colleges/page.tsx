@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 
-interface College {
+export interface College {
   _id: string;
   name: string;
   image: string;

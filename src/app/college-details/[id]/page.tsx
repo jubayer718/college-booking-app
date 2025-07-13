@@ -1,29 +1,85 @@
-// // import { notFound } from "next/navigation";
+/* eslint-disable @next/next/no-img-element */
+"use client"
+export interface College {
+  _id: string;
+  name: string;
+  image: string;
+  admissionDates: string;
+  events: string[];
+  research: string[];
+  sports: string[];
+  rating: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
-// interface PageProps {
-//   params: {
-//     id: string;
-//   };
-// }
+import useAxiosPublic from "@/components/Hooks/useAxiosPublic";
 
-// const DetailsPage = ({ params }: PageProps) => {
-//   // const { id } = params;
-//   return (
-//     <div className='my-16'>
-//       <h1>Details Page for ID: {params.id}</h1>
-//     </div>
-//   );
-// };
-
-// export default DetailsPage;
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 
-import React from 'react';
-
-const  DetailsPage= () => {
-  return (
-    <div>
+const DetailsPage = () => {
+  const { id } = useParams();
+  const [college, setCollege] = useState<College | null>(null);
+  const axiosPublic = useAxiosPublic();
+  useEffect(() => {
+    const timer = setTimeout(() => {
       
+      const getCollege = async () => {
+        try {
+          const { data } = await axiosPublic.get(`/api/college/${id}`);
+          setCollege(data.data)
+        } catch (error) {
+          console.log("error from college details",error)
+        }
+      }
+      getCollege()
+    }, 1000);
+    return () => clearTimeout(timer);
+  },[axiosPublic, id])
+  console.log(college)
+  return (
+    <div className="my-14">
+      <div className="my-14 p-6 space-y-6 max-w-4xl mx-auto">
+        {college ? (
+          <>
+            <img src={college.image} alt={college.name} className="w-full h-80 object-fill rounded-xl shadow" />
+            <h1 className="text-3xl font-bold">{college.name}</h1>
+            <p><strong>Admission Dates:</strong> {college.admissionDates}</p>
+
+            <div>
+              <h2 className="text-xl font-semibold mt-4">Events</h2>
+              <ul className="list-disc ml-6">
+                {college.events.map((event, i) => <li key={i}>{event}</li>)}
+              </ul>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-semibold mt-4">Research</h2>
+              <ul className="list-disc ml-6">
+                {college.research.map((item, i) => <li key={i}>{item}</li>)}
+              </ul>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-semibold mt-4">Sports</h2>
+              <ul className="list-disc ml-6">
+                {college.sports.map((item, i) => <li key={i}>{item}</li>)}
+              </ul>
+            </div>
+            {/* <Link href={`/admission/${params.id}`}>
+              <Button>Go to Admission</Button>
+            </Link>
+
+            <ReviewForm collegeId={params.id} />
+            <ReviewList collegeId={params.id} /> */}
+          </>
+        ) : (
+          <div className="text-center py-20 text-gray-500">Loading college details...</div>
+        )}
+      </div>
     </div>
   );
 };

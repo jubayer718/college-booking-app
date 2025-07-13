@@ -3,12 +3,14 @@
 'use client';
 
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Admission } from "@/interfaces/admission.interface";
 import { useSession } from "next-auth/react";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { college } from "@/interfaces/college.interface";
 
 
 
@@ -16,6 +18,17 @@ const AdmissionForm = () => {
   const { id } = useParams();
   const router = useRouter();
   const { data: session, status } = useSession();
+  const [colleges, setColleges] = useState<college[]>([]);
+  const axiosPublic = useAxiosPublic();
+
+  useEffect(() => {
+    const getColleges = async () => {
+      const { data } = await axiosPublic.get('api/colleges');
+      setColleges(data.data);
+    };
+    getColleges();
+  }, [axiosPublic, setColleges]);
+
   const [formData, setFormData] = useState<Admission>({
     name: "",
     subject: "",
@@ -44,6 +57,7 @@ const AdmissionForm = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+
     try {
       const res = await fetch("/api/admission", {
         method: "POST",
@@ -52,6 +66,7 @@ const AdmissionForm = () => {
       });
 
       const result = await res.json();
+      
       if (res.ok) {
         alert("🎉 Admission Successful!");
         // Optionally redirect to /my-college

@@ -4,15 +4,18 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { Button } from "../ui/button";
 
 export default function ReviewForm({ collegeId }: { collegeId: string }) {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
+  console.log(collegeId)
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("https://college-booking-server-neon.vercel.app/api/reviews", {
+    const res = await fetch("http://localhost:9000/api/reviews", {
       method: "POST",
       body: JSON.stringify({
         collegeId,
@@ -33,7 +36,9 @@ export default function ReviewForm({ collegeId }: { collegeId: string }) {
   if (!session) return <p className="text-gray-500">Login to leave a review.</p>;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mt-6">
+    <div>
+      <h4 className="font-semibold my-2">Add review</h4>
+       <form onSubmit={handleSubmit} className="space-y-4 mt-6">
       <textarea
         required
         value={comment}
@@ -49,9 +54,10 @@ export default function ReviewForm({ collegeId }: { collegeId: string }) {
         onChange={(e) => setRating(Number(e.target.value))}
         className="border p-2 w-20"
       />
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+        <Button  type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:cursor-pointer">
         Submit Review
-      </button>
+      </Button>
     </form>
+   </div>
   );
 }

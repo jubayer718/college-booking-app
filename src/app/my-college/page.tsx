@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Admission } from "@/interfaces/admission.interface";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import ReviewForm from "@/components/layout/ReviewForm";
 
 const MyCollege = () => {
   const { data: session, status } = useSession();
@@ -65,8 +66,10 @@ const MyCollege = () => {
               alt={item.name}
               className="w-full  object-cover rounded"
             />
+            <ReviewForm collegeId={ item._id || ""} />
           </div>
         ))
+        
       ) : (
         <p>No admission data found</p>
       )}

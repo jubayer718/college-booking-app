@@ -20,6 +20,7 @@ interface Review {
 const ReviewSection = () => {
   const axiosPublic = useAxiosPublic();
   const [reviews, setReviews] = useState<Review[]>([]);
+  console.log(reviews)
 
   useEffect(() => {
     const getReviews = async () => {
