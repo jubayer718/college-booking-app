@@ -1,6 +1,7 @@
 
-import CollegeGallery from "@/components/layout/CollegeGallery";
+import CollegeGallery from "@/components/layout/home/CollegeGallery";
 import SearchFilter from "@/components/layout/SearchFilter";
+import ResearchPapers from "@/components/layout/home/ResearchPepar"
 
 
 export default function Home() {
@@ -11,8 +12,8 @@ export default function Home() {
 
       {/* college gallery */}
       <CollegeGallery/>
-
-
+    {/* Research paper section */}
+    <ResearchPapers/>
     </div>
   );
 }
