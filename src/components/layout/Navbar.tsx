@@ -10,9 +10,9 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
 
         <ul className="flex gap-4 sm:gap-2 font-semibold">
-          <Link href={''}>Home</Link>
-          <Link href={''}>Colleges</Link>
-          <Link href={''}>My College</Link>
+          <Link href={'/'}>Home</Link>
+          <Link href={'/colleges'}>Colleges</Link>
+          <Link href={`/my-college/:id`}>My College</Link>
         </ul>
           {
         session ? (

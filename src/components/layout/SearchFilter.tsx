@@ -46,7 +46,7 @@ const SearchFilter = () => {
       </div>
     {/* college cards */}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredColleges.map((college) => (
+        {filteredColleges.slice(0,3).map((college) => (
           <CollegeCard key={college._id} college={college}/>
         ))}
       </div>
