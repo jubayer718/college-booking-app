@@ -15,7 +15,7 @@ export default function ReviewForm({ collegeId }: { collegeId: string }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:9000/api/reviews", {
+    const res = await fetch("https://college-booking-server-neon.vercel.app/api/reviews", {
       method: "POST",
       body: JSON.stringify({
         collegeId,
