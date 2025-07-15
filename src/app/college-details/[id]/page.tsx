@@ -16,25 +16,17 @@ export interface College {
 
 import useAxiosPublic from "@/components/Hooks/useAxiosPublic";
 import { useSession } from "next-auth/react";
-
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 const DetailsPage = () => {
   const { id } = useParams();
-  const {data:session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [college, setCollege] = useState<College | null>(null);
   const axiosPublic = useAxiosPublic();
-  const [redirecting, setIsRedirecting] = useState(false);
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      setIsRedirecting(true); // avoid rendering while redirecting
-      router.replace("/login");
-    }
-  }, [status, router]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -50,15 +42,15 @@ const DetailsPage = () => {
       getCollege()
     }, 1000);
     return () => clearTimeout(timer);
-  },[axiosPublic, id, router, status])
+  },[axiosPublic, id, router])
   
 
 
-   if (status === "loading" || redirecting) {
+   if (status === "loading" ) {
     return <p className="my-14 text-center">Loading...</p>;
   }
 
-  if (!session) return null;
+ 
   return (
     <div className="my-14">
       <div className="my-14 p-6 space-y-6 max-w-4xl mx-auto">

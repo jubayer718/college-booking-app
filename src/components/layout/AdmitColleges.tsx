@@ -6,7 +6,7 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 
 
@@ -22,18 +22,20 @@ interface College {
 
 const AdmitColleges = () => {
   const { data: session, status } = useSession();
-  const router = useRouter();
   const [colleges, setColleges] = useState<College[]>([]);
   const axiosPublic = useAxiosPublic();
+  
+  // const router = useRouter();
+//  const [redirecting, setIsRedirecting] = useState(false);
 
- const [redirecting, setIsRedirecting] = useState(false);
+//   useEffect(() => {
+//     if (status === "unauthenticated") {
+//       setIsRedirecting(true); // avoid rendering while redirecting
+//       router.replace("/login");
+//     }
+//   }, [status, router]);
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      setIsRedirecting(true); // avoid rendering while redirecting
-      router.replace("/login");
-    }
-  }, [status, router]);
+
   useEffect(() => {
     const getColleges = async () => {
       const { data } = await axiosPublic.get('api/colleges');
@@ -42,7 +44,7 @@ const AdmitColleges = () => {
     getColleges();
   }, [axiosPublic]);
 
-  if (status === 'loading' || redirecting) {
+  if (status === 'loading' ) {
     return <p className=" my-14 text-center">loading...</p>
   }
   if (!session) {

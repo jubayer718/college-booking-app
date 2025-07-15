@@ -3,21 +3,13 @@
 import { useEffect, useState } from "react";
 import { Admission } from "@/interfaces/admission.interface";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import ReviewForm from "@/components/layout/ReviewForm";
 
 const MyCollege = () => {
   const { data: session, status } = useSession();
-  const router = useRouter();
   const [data, setData] = useState<Admission[] | null>(null);
-  const [isRedirecting, setIsRedirecting] = useState(false);
+ 
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      setIsRedirecting(true); // avoid rendering while redirecting
-      router.replace("/login");
-    }
-  }, [status, router]);
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -28,7 +20,7 @@ const MyCollege = () => {
     }
   }, [session?.user?.email]);
 
-  if (status === "loading" || isRedirecting) {
+  if (status === "loading") {
     return <p className="my-14 text-center">Loading...</p>;
   }
 

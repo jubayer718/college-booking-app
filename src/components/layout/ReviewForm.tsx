@@ -10,7 +10,7 @@ export default function ReviewForm({ collegeId }: { collegeId: string }) {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
-  console.log(collegeId)
+  // console.log(collegeId)
   
 
   const handleSubmit = async (e: React.FormEvent) => {
