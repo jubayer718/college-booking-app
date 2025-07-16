@@ -32,7 +32,7 @@ const Navbar = () => {
 
           {session ? (
             <div className="flex items-center gap-3">
-              <span>{session.user?.name}</span>
+              <Link href="/profile" className="underline cursor-pointer">{session.user?.name}</Link>
               <button
                 onClick={() => signOut()}
                 className="text-sm bg-red-500 text-white px-3 py-1 rounded"
